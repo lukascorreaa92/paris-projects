@@ -1,4 +1,4 @@
-# Gestão de Implantações
+# Paris Projects
 
 Mini ferramenta web para organizar projetos de implantação de **PACS** e **RIS**: cadastro dos projetos, acompanhamento das etapas e **cálculo automático de prazos e atrasos**.
 
@@ -34,21 +34,36 @@ As regras ficam em `regras.py`. Os prazos são constantes no topo do arquivo.
 - HTML, CSS e um pouco de JavaScript (Jinja2 nos templates)
 - [PyInstaller](https://pyinstaller.org/) (geração do executável)
 
-## Como rodar (desenvolvimento)
+## Como usar
+
+### Opção 1: só baixar e usar (recomendado)
+
+Baixe o **`ParisProjects.exe`** na página de [Releases](../../releases) do repositório, coloque numa pasta fixa (por exemplo `Documentos\ParisProjects`) e dê dois cliques. O navegador abre sozinho no app.
+
+- Os seus projetos ficam salvos num arquivo ao lado do `.exe`.
+- Para encerrar, feche a janela preta.
+- Se o Windows mostrar "O Windows protegeu o computador", clique em **Mais informações → Executar assim mesmo** (o aviso aparece porque o executável não tem assinatura digital).
+
+### Opção 2: gerar o executável a partir do código (Windows)
+
+1. Baixe o código (**Code → Download ZIP**) e **extraia** o zip.
+2. Dê dois cliques em **`gerar_exe.bat`**.
+
+O script faz tudo sozinho: confere o Python (e oferece instalar, se não houver), cria o ambiente virtual, instala as dependências, roda os testes e gera o `dist\ParisProjects.exe`. No final, ele pergunta se você quer abrir o programa.
+
+Não é preciso rodar como administrador. Na primeira vez leva alguns minutos, porque baixa as dependências da internet.
+
+### Opção 3: rodar pelo código (desenvolvimento)
 
 ```bash
-# 1. Criar e ativar o ambiente virtual
-python -m venv venv
-venv\Scripts\activate          # Windows
-# source venv/bin/activate     # Linux/Mac
+python -m venv .venv
+.venv\Scripts\activate          # Windows
+# source .venv/bin/activate     # Linux/Mac
 
-# 2. Instalar as dependências
 pip install -r requirements.txt
 
-# 3. Rodar
-python app.py                  # modo desenvolvimento (recarga automática)
-# ou
-python iniciar.py              # modo de uso (abre o navegador sozinho)
+python app.py                   # modo desenvolvimento (recarga automática)
+python iniciar.py               # modo de uso (abre o navegador sozinho)
 ```
 
 Acesse **http://127.0.0.1:5000**. O banco (`implantacoes.db`) é criado automaticamente no primeiro uso.
@@ -59,13 +74,7 @@ Acesse **http://127.0.0.1:5000**. O banco (`implantacoes.db`) é criado automati
 python testar_regras.py
 ```
 
-Os testes conferem as regras de prazo com uma data fixa, incluindo feriados e fins de semana.
-
-## Gerar o executável (Windows)
-
-Com o ambiente virtual ativado, dê dois cliques em `gerar_exe.bat` (ou rode o arquivo no terminal). Não é preciso rodar como administrador.
-
-O executável é gerado em `dist\GestaoImplantacoes.exe`. Coloque-o numa pasta definitiva: o banco de dados e a chave secreta são criados **ao lado do `.exe`**.
+Os testes conferem as regras de prazo com uma data fixa, incluindo feriados e fins de semana. O `gerar_exe.bat` roda esses testes antes de gerar o executável e não gera nada se algum falhar.
 
 ## Estrutura
 
@@ -81,7 +90,7 @@ O executável é gerado em `dist\GestaoImplantacoes.exe`. Coloque-o numa pasta d
 ├── filtros.py           # busca, filtros e ordenação
 ├── opcoes.py            # listas de opções fixas
 ├── testar_regras.py     # testes das regras de prazo
-├── gerar_exe.bat        # gera o executável
+├── gerar_exe.bat        # prepara tudo e gera o executável
 ├── templates/           # páginas HTML (Jinja2)
 └── static/              # CSS, JavaScript e imagens
 ```
