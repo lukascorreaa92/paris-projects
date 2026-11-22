@@ -1,0 +1,5 @@
+# Arquivos .bat PRECISAM de quebra de linha do Windows (CRLF) para funcionar
+*.bat text eol=crlf
+
+# Demais arquivos de texto: o Git ajusta automaticamente
+* text=auto
