@@ -103,3 +103,10 @@ Os testes conferem as regras de prazo com uma data fixa, incluindo feriados e fi
 - Formulários protegidos contra **CSRF** (token por sessão + cookie `SameSite=Lax`).
 - Acesso só pelos hosts `127.0.0.1` e `localhost` (proteção contra *DNS rebinding*).
 - Consultas SQL parametrizadas, HTML escapado automaticamente e links aceitos só com `http://` ou `https://`.
+
+- Consultas SQL parametrizadas, HTML escapado automaticamente e links aceitos só com `http://` ou `https://`.
+
+## Autores
+
+- [@lukascorreaa92](https://github.com/lukascorreaa92)
+- [@CarvalhoLucas001](https://github.com/CarvalhoLucas001)
