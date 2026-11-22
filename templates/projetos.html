@@ -1,0 +1,52 @@
+{% extends "layout_app.html" %}
+{% import "macros.html" as m %}
+
+{% block titulo %}Projetos · {{ nome_app }}{% endblock %}
+
+{% block principal %}
+<header class="topo">
+    <h1>
+        Meus projetos
+        <span class="contador">
+            {{ projetos | length }}{% if projetos | length != total %} de {{ total }}{% endif %}
+        </span>
+    </h1>
+    <a href="{{ url_for('novo_projeto') }}" class="botao botao-primario">+ Novo projeto</a>
+</header>
+
+<div class="grade-cards">
+    {% for p in projetos %}
+        <article class="card status-{{ p.classe_status }}">
+
+            <div class="card-topo">
+                <span class="tag-produto">{{ p.produto }}</span>
+                <span class="selo-status">{{ p.status }}</span>
+            </div>
+
+            <h3 class="card-titulo">
+                <a href="{{ url_for('detalhe_projeto', projeto_id=p.id) }}">{{ p.cliente }}</a>
+            </h3>
+
+            <dl class="card-dados">
+                <div><dt>Infra</dt><dd>{{ m.link_externo(p.infra_url) }}</dd></div>
+                <div><dt>Doc</dt><dd>{{ m.link_externo(p.doc_url) }}</dd></div>
+                <div><dt>Início do projeto</dt><dd>{{ p.data_inicio_projeto | data_br }}</dd></div>
+            </dl>
+
+            {% for etapa in p.prazos if etapa.atrasada %}
+                <p class="card-alerta">⚠ {{ etapa.nome }}: {{ etapa.texto | lower }}</p>
+            {% endfor %}
+
+        </article>
+    {% else %}
+        {% if total == 0 %}
+            <p class="vazio">Nenhum projeto cadastrado ainda. Clique em "+ Novo projeto" para começar.</p>
+        {% else %}
+            <p class="vazio">
+                Nenhum projeto encontrado com esses filtros.
+                <a href="{{ url_for('projetos') }}">Limpar filtros</a>
+            </p>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}

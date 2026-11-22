@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+
+{% block titulo %}{{ titulo }} · {{ nome_app }}{% endblock %}
+
+{% block conteudo %}
+<main class="pagina-form">
+
+    <header class="topo">
+        <h1>{{ titulo }}</h1>
+        <a href="{{ voltar }}" class="botao botao-secundario">← Voltar</a>
+    </header>
+
+    <form method="post" class="formulario">
+        {# Token anti-CSRF: prova que o formulário veio do próprio app #}
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <fieldset>
+            <legend>Identificação</legend>
+            <div class="grade-campos">
+                {{ m.campo(projeto, "cliente", "Cliente", obrigatorio=true, placeholder="Ex.: Hospital São Lucas") }}
+                {{ m.selecao(projeto, "produto", "Produto", opcoes.PRODUTOS, obrigatorio=true) }}
+                {{ m.selecao(projeto, "fase", "Fase do projeto", opcoes.FASES, obrigatorio=true, padrao="INÍCIO") }}
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Links</legend>
+            <div class="grade-campos">
+                {{ m.campo(projeto, "infra_url", "Infra", tipo="url", placeholder="https://...") }}
+                {{ m.campo(projeto, "doc_url", "Doc (Drive)", tipo="url", placeholder="https://...") }}
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Datas das etapas</legend>
+            <div class="grade-campos">
+                {{ m.campo(projeto, "data_inicio_projeto", "Início do projeto", tipo="date") }}
+                {{ m.campo(projeto, "planilhas_data_envio", "Planilhas: envio", tipo="date", dica="Prazo do cliente: 5 dias úteis") }}
+                {{ m.campo(projeto, "planilhas_data_devolucao", "Planilhas: devolução", tipo="date") }}
+                {{ m.campo(projeto, "data_inicio_cadastro", "Início do cadastro", tipo="date", dica="Prazo: 30 dias corridos") }}
+                {{ m.campo(projeto, "data_inicio_treinamentos", "Início dos treinamentos", tipo="date") }}
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Acompanhamento</legend>
+            <div class="grade-campos">
+                {{ m.selecao(projeto, "validacao_cliente", "Validação c/ cliente", opcoes.VALIDACAO_CLIENTE, obrigatorio=true, padrao="PENDENTE") }}
+                {{ m.selecao(projeto, "passagem_homologacao", "Passagem p/ homologação", opcoes.PASSAGEM_HOMOLOGACAO, obrigatorio=true, padrao="ENVIAR E-MAIL DE PASSAGEM") }}
+                {{ m.selecao(projeto, "reuniao_implantador", "Reunião c/ implantador", opcoes.REUNIAO_IMPLANTADOR, obrigatorio=true, padrao="PENDENTE") }}
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Informações secundárias</legend>
+            <div class="grade-campos">
+                {{ m.selecao(projeto, "tipo_projeto", "Tipo de projeto", opcoes.TIPOS_PROJETO) }}
+                {{ m.selecao(projeto, "tipo_servidor", "Tipo de servidor", opcoes.TIPOS_SERVIDOR) }}
+                {{ m.campo(projeto, "gp", "GP (Gerente de Projetos)") }}
+                {{ m.campo(projeto, "telelaudo", "Telelaudo", placeholder="Nome da Tele (vazio = não há)") }}
+                {{ m.campo(projeto, "integracao", "Integração", placeholder="Qual integração (vazio = não há)") }}
+            </div>
+        </fieldset>
+
+        <div class="acoes">
+            <a href="{{ voltar }}" class="botao botao-secundario">Cancelar</a>
+            <button type="submit" class="botao botao-primario">Salvar projeto</button>
+        </div>
+
+    </form>
+</main>
+{% endblock %}

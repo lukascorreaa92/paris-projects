@@ -1,0 +1,829 @@
+/* ============================================================
+   VARIÁVEIS — cores e medidas usadas no app inteiro.
+   Mudou aqui, muda em todo lugar.
+   ============================================================ */
+:root {
+    /* Cores de status (do seu rascunho) */
+    --cor-inicio: #0095da;
+    --cor-andamento: #f7941d;
+    --cor-finalizado: #3f9466;
+    --cor-atrasado: #e0262f;
+
+    /* Cores da interface */
+    --cor-fundo: #f3f5f8;
+    --cor-superficie: #ffffff;
+    --cor-borda: #dde2e9;
+    --cor-texto: #1f2933;
+    --cor-texto-suave: #6b7785;
+    --cor-primaria: #1f3a5f;
+
+    --raio: 8px;
+    --sombra: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.5;
+}
+
+/* ============================================================
+   BOTÕES
+   ============================================================ */
+.botao {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: var(--raio);
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;  /* <button> não herda a fonte sozinho */
+    font-size: 14px;
+    transition: opacity 0.15s;
+}
+
+.botao:hover {
+    opacity: 0.88;
+}
+
+.botao-primario {
+    background: var(--cor-primaria);
+    color: var(--cor-sobre-primaria);
+}
+
+/* ============================================================
+   TELA INICIAL
+   ============================================================ */
+.tela-inicio {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.caixa-inicio {
+    background: var(--cor-superficie);
+    padding: 48px 64px;
+    border-radius: 16px;
+    box-shadow: var(--sombra);
+    text-align: center;
+}
+
+.logo-provisorio {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: var(--cor-primaria);
+    color: var(--cor-sobre-primaria);
+    font-size: 36px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    display: block;
+    width: 320px;      /* largura de exibição do logo */
+    max-width: 100%;   /* nunca passa da largura da caixa */
+    height: auto;      /* altura acompanha a proporção original */
+    margin: 0 auto 24px;
+}
+
+.caixa-inicio h1 {
+    font-size: 26px;
+}
+
+.subtitulo {
+    color: var(--cor-texto-suave);
+    margin-bottom: 28px;
+    letter-spacing: 2px;
+}
+
+.caixa-inicio .botao {
+    padding: 12px 48px;
+    font-size: 16px;
+}
+
+/* ============================================================
+   LAYOUT DO APP: menu lateral + área principal
+   ============================================================ */
+.layout-app {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 24px;
+    padding: 24px;
+    min-height: 100vh;
+}
+
+.lateral {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.painel {
+    background: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio);
+    padding: 16px;
+}
+
+.painel h2 {
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+}
+
+.campo-busca {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+    margin-bottom: 12px;
+    font-size: 14px;
+}
+
+.lista-projetos {
+    list-style: none;
+}
+
+.area-principal {
+    background: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio);
+    padding: 24px;
+}
+
+.topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.topo h1 {
+    font-size: 22px;
+}
+
+.grade-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.vazio {
+    color: var(--cor-texto-suave);
+    font-size: 14px;
+}
+
+/* Quando a mensagem "vazio" estiver dentro da grade, ocupa a linha toda */
+.grade-cards .vazio {
+    grid-column: 1 / -1;
+}
+
+/* ============================================================
+   PASSO 4 — LISTA LATERAL, MENSAGENS E FORMULÁRIO
+   ============================================================ */
+
+/* Itens da lista de projetos no menu lateral */
+.lista-projetos li {
+    font-size: 14px;
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.lista-projetos li:last-child {
+    border-bottom: none;
+}
+
+.tag-produto {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    margin-right: 6px;
+    border-radius: 4px;
+    background: var(--cor-fundo);
+    color: var(--cor-texto-suave);
+}
+
+/* Botão secundário (Voltar / Cancelar) */
+.botao-secundario {
+    background: var(--cor-superficie);
+    color: var(--cor-texto);
+    border: 1px solid var(--cor-borda);
+}
+
+/* Mensagens de aviso: canto inferior direito, somem sozinhas após ~5s */
+.mensagens {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 380px;
+}
+
+.mensagem {
+    padding: 12px 16px;
+    border-radius: var(--raio);
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    border-left: 4px solid;
+    background: var(--cor-superficie);
+    animation: sumir 6s forwards;
+}
+
+@keyframes sumir {
+    0%, 85% { opacity: 1; }
+    100%    { opacity: 0; visibility: hidden; }
+}
+
+.mensagem-sucesso {
+    border-left-color: var(--cor-finalizado);
+}
+
+.mensagem-erro {
+    border-left-color: var(--cor-atrasado);
+}
+
+/* Página do formulário */
+.pagina-form {
+    max-width: 960px;
+    margin: 24px auto;
+    padding: 24px;
+    background: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio);
+}
+
+.formulario fieldset {
+    border: none;
+    border-top: 1px solid var(--cor-borda);
+    padding: 16px 0 20px;
+}
+
+.formulario legend {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--cor-primaria);
+    padding-right: 8px;
+}
+
+/* Campos lado a lado: quantos couberem com no mínimo 260px cada */
+.grade-campos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 8px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.rotulo {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.rotulo em {
+    color: var(--cor-atrasado);
+    font-style: normal;
+}
+
+.campo input,
+.campo select {
+    padding: 8px 10px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+    background: var(--cor-superficie);
+    color: var(--cor-texto);
+}
+
+/* Destaque quando o campo está selecionado */
+.campo input:focus,
+.campo select:focus {
+    outline: 2px solid var(--cor-inicio);
+    border-color: transparent;
+}
+
+.dica {
+    font-size: 12px;
+    color: var(--cor-texto-suave);
+}
+
+.acoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--cor-borda);
+}
+
+/* ============================================================
+   PASSO 5 — CARDS DOS PROJETOS
+   ============================================================ */
+
+/* Cada classe de status define UMA variável: --cor-status.
+   Tudo dentro do elemento (borda, título, selo) usa essa variável. */
+.status-inicio     { --cor-status: var(--cor-inicio); }
+.status-andamento  { --cor-status: var(--cor-andamento); }
+.status-finalizado { --cor-status: var(--cor-finalizado); }
+.status-atrasado   { --cor-status: var(--cor-atrasado); }
+
+/* Contador de projetos ao lado do título */
+.contador {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 2px 10px;
+    margin-left: 6px;
+    border-radius: 999px;
+    background: var(--cor-fundo);
+    color: var(--cor-texto-suave);
+    vertical-align: middle;
+}
+
+/* Bolinha colorida na lista lateral */
+.ponto-status {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 4px;
+    background: var(--cor-status);
+}
+
+/* O card */
+.card {
+    background: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-top: 4px solid var(--cor-status);
+    border-radius: var(--raio);
+    padding: 14px 16px 16px;
+    box-shadow: var(--sombra);
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.card-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.card-titulo {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--cor-status);
+    margin-bottom: 12px;
+}
+
+/* Selo de status: bolinha colorida + texto (não depende só da cor) */
+.selo-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border: 1px solid var(--cor-status);
+    border-radius: 999px;
+    color: var(--cor-texto);
+}
+
+.selo-status::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--cor-status);
+}
+
+/* Lista de dados: rótulo à esquerda, valor à direita */
+.card-dados div {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 5px 0;
+    font-size: 13px;
+    border-top: 1px dashed var(--cor-borda);
+}
+
+.card-dados dt {
+    color: var(--cor-texto-suave);
+}
+
+.card-dados dd {
+    font-weight: 600;
+}
+
+/* ============================================================
+   PASSO 6 — CARD CLICÁVEL, LISTA LATERAL E TELA DE DETALHE
+   ============================================================ */
+
+/* Links "Abrir ↗" (cards e detalhe) */
+.link-externo {
+    color: var(--cor-primaria);
+    text-decoration: none;
+}
+
+.link-externo:hover {
+    text-decoration: underline;
+}
+
+/* --- Card inteiro clicável ---
+   O link do título ganha um "::after" invisível do tamanho do card.
+   Os links "Abrir ↗" ficam por cima dele (z-index) e continuam funcionando. */
+.card {
+    position: relative;
+    cursor: pointer;
+}
+
+.card-titulo a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.card-titulo a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+}
+
+.card-dados .link-externo {
+    position: relative;
+    z-index: 1;
+}
+
+/* --- Lista lateral com links --- */
+.lista-projetos a {
+    display: block;
+    padding: 6px 8px;
+    margin: 2px -8px;
+    border-radius: 6px;
+    color: var(--cor-texto);
+    text-decoration: none;
+}
+
+.lista-projetos a:hover {
+    background: var(--cor-fundo);
+}
+
+/* Projeto aberto no momento */
+.lista-projetos li.ativo a {
+    background: var(--cor-fundo);
+    font-weight: 700;
+    box-shadow: inset 3px 0 0 var(--cor-status);
+}
+
+/* --- Tela de detalhe --- */
+.detalhe-barra {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.link-voltar {
+    color: var(--cor-texto-suave);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.link-voltar:hover {
+    color: var(--cor-texto);
+}
+
+.detalhe-cabecalho {
+    border-top: 4px solid var(--cor-status);
+    padding-top: 16px;
+    margin-bottom: 24px;
+}
+
+.detalhe-etiquetas {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.detalhe-titulo {
+    font-size: 32px;
+    line-height: 1.2;
+    color: var(--cor-status);
+}
+
+/* Duas colunas de dados lado a lado */
+.detalhe-colunas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 40px;
+    margin-bottom: 28px;
+}
+
+.lista-dados div {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 0;
+    font-size: 14px;
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.lista-dados dt {
+    color: var(--cor-texto-suave);
+}
+
+.lista-dados dd {
+    font-weight: 600;
+    text-align: right;
+}
+
+/* Retângulo das informações secundárias */
+.detalhe-secundario {
+    background: var(--cor-fundo);
+    border-radius: var(--raio);
+    padding: 16px 20px;
+}
+
+.detalhe-secundario h2 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--cor-primaria);
+    margin-bottom: 12px;
+}
+
+.grade-secundaria {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px 24px;
+}
+
+.grade-secundaria dt {
+    font-size: 12px;
+    color: var(--cor-texto-suave);
+}
+
+.grade-secundaria dd {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.detalhe-rodape {
+    margin-top: 20px;
+    font-size: 12px;
+    color: var(--cor-texto-suave);
+}
+
+/* ============================================================
+   PASSO 7 — PRAZOS
+   ============================================================ */
+
+/* Aviso de atraso no card */
+.card-alerta {
+    margin-top: 10px;
+    padding: 6px 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--cor-atrasado);
+    background: #fdecec;
+    border-radius: 6px;
+}
+
+/* Bloco de prazos na tela de detalhe */
+.detalhe-prazos {
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio);
+    padding: 16px 20px 8px;
+    margin-bottom: 20px;
+}
+
+.detalhe-prazos h2 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--cor-primaria);
+    margin-bottom: 8px;
+}
+
+.linha-prazo {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 16px;
+    padding: 8px 0;
+    font-size: 14px;
+    border-top: 1px solid var(--cor-borda);
+}
+
+.prazo-nome {
+    font-weight: 600;
+}
+
+.prazo-data {
+    color: var(--cor-texto-suave);
+}
+
+/* Selo da situação do prazo: texto + cor */
+.selo-prazo {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+.prazo-neutro    { background: var(--cor-fundo); color: var(--cor-texto-suave); }
+.prazo-ok        { background: #e6f4fb; color: #0b6a99; }
+.prazo-alerta    { background: #fff1e0; color: #a35a00; }
+.prazo-atrasado  { background: #fdecec; color: #b3121b; }
+.prazo-concluido { background: #e7f4ec; color: #2c6e4a; }
+
+/* ============================================================
+   PASSO 8 — BUSCA E FILTROS
+   ============================================================ */
+
+/* O formulário agora envolve os dois painéis: ele assume o espaçamento entre eles */
+.form-filtros {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Campo de busca + botão lado a lado */
+.busca {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.busca .campo-busca {
+    margin-bottom: 0;
+    min-width: 0;   /* deixa o campo encolher dentro do flex */
+}
+
+.botao-busca {
+    padding: 0 10px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+    background: var(--cor-fundo);
+    font-family: inherit;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.botao-busca:hover {
+    background: var(--cor-borda);
+}
+
+/* Grupos de filtro */
+.grupo-filtro {
+    border: none;
+    margin-bottom: 14px;
+}
+
+.grupo-filtro legend {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--cor-texto-suave);
+    margin-bottom: 4px;
+}
+
+.opcao-filtro {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 0;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.opcao-filtro input {
+    accent-color: var(--cor-primaria);  /* cor da bolinha do radio */
+    cursor: pointer;
+}
+
+.link-limpar {
+    font-size: 13px;
+    color: var(--cor-texto-suave);
+}
+
+.link-limpar:hover {
+    color: var(--cor-texto);
+}
+
+/* ============================================================
+   PASSO 9 — TEMA CLARO / ESCURO
+   ============================================================ */
+
+/* Cor do texto sobre a cor primária (botões) */
+:root {
+    --cor-sobre-primaria: #ffffff;
+    color-scheme: light;
+}
+
+/* Tema escuro: só trocamos os VALORES das variáveis.
+   Como todo o CSS usa var(...), o app inteiro muda junto. */
+[data-tema="escuro"] {
+    color-scheme: dark;  /* calendário, selects e barra de rolagem escuros */
+
+    --cor-fundo: #11161d;
+    --cor-superficie: #1a212b;
+    --cor-borda: #2c3642;
+    --cor-texto: #e6ebf1;
+    --cor-texto-suave: #98a4b3;
+    --cor-primaria: #5b9be0;
+    --cor-sobre-primaria: #0b1220;
+    --sombra: 0 1px 3px rgba(0, 0, 0, 0.4);
+
+    /* Status um pouco mais claros, para ler bem no fundo escuro */
+    --cor-inicio: #33aef0;
+    --cor-andamento: #f8a24a;
+    --cor-finalizado: #54b884;
+    --cor-atrasado: #f2575f;
+}
+
+/* Elementos que tinham cores "fixas" (não-variáveis) no tema claro */
+[data-tema="escuro"] .card-alerta      { background: rgba(242, 87, 95, 0.14); }
+[data-tema="escuro"] .prazo-ok         { background: rgba(51, 174, 240, 0.15); color: #7cc8f5; }
+[data-tema="escuro"] .prazo-alerta     { background: rgba(248, 162, 74, 0.15); color: #f8b36b; }
+[data-tema="escuro"] .prazo-atrasado   { background: rgba(242, 87, 95, 0.15); color: #f58a90; }
+[data-tema="escuro"] .prazo-concluido  { background: rgba(84, 184, 132, 0.15); color: #7fcca3; }
+
+/* Transição suave ao trocar de tema */
+body,
+.painel,
+.area-principal,
+.card,
+.pagina-form,
+.caixa-inicio {
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+
+/* Campo de busca acompanha o tema */
+.campo-busca {
+    background: var(--cor-superficie);
+    color: var(--cor-texto);
+}
+
+/* Botão de alternar tema: canto inferior direito.
+   Os avisos (flash) sobem um pouco para não ficarem em cima dele. */
+.mensagens {
+    bottom: 72px;
+}
+
+.botao-tema {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 10;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid var(--cor-borda);
+    background: var(--cor-superficie);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.botao-tema:hover {
+    transform: scale(1.08);
+}
+
+/* Mostra a lua no tema claro (para ir ao escuro) e o sol no escuro */
+.icone-sol { display: none; }
+[data-tema="escuro"] .icone-lua { display: none; }
+[data-tema="escuro"] .icone-sol { display: inline; }

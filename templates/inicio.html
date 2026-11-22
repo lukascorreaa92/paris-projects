@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block titulo %}Bem-vindo · {{ nome_app }}{% endblock %}
+
+{% block conteudo %}
+<main class="tela-inicio">
+    <div class="caixa-inicio">
+        {# Se existir static/img/logo.png, mostra o logo; senão, um círculo provisório #}
+        {% if tem_logo %}
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo {{ nome_app }}" class="logo">
+        {% else %}
+            <div class="logo-provisorio">{{ nome_app[:1] }}</div>
+        {% endif %}
+
+        <h1>{{ nome_app }}</h1>
+        <p class="subtitulo">PACS · RIS</p>
+
+        <a href="{{ url_for('projetos') }}" class="botao botao-primario">Entrar</a>
+    </div>
+</main>
+{% endblock %}

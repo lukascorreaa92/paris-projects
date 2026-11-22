@@ -1,0 +1,46 @@
+{# Macros = "funções" do Jinja. Evitam repetir o mesmo HTML para cada campo. #}
+
+{% macro campo(projeto, nome, rotulo, tipo="text", obrigatorio=false, placeholder="", dica="") %}
+<label class="campo">
+    <span class="rotulo">{{ rotulo }}{% if obrigatorio %} <em>*</em>{% endif %}</span>
+    <input type="{{ tipo }}" name="{{ nome }}"
+           value="{{ projeto.get(nome) or '' }}"
+           placeholder="{{ placeholder }}"
+           {% if obrigatorio %}required{% endif %}>
+    {% if dica %}<small class="dica">{{ dica }}</small>{% endif %}
+</label>
+{% endmacro %}
+
+
+{% macro selecao(projeto, nome, rotulo, lista, obrigatorio=false, padrao=none) %}
+{% set atual = projeto.get(nome) or padrao %}
+<label class="campo">
+    <span class="rotulo">{{ rotulo }}{% if obrigatorio %} <em>*</em>{% endif %}</span>
+    <select name="{{ nome }}" {% if obrigatorio %}required{% endif %}>
+        {% if not padrao %}<option value="">Selecione...</option>{% endif %}
+        {% for item in lista %}
+            <option value="{{ item }}" {% if item == atual %}selected{% endif %}>{{ item }}</option>
+        {% endfor %}
+    </select>
+</label>
+{% endmacro %}
+
+
+{% macro link_externo(url) %}
+{%- if url -%}
+    <a href="{{ url }}" target="_blank" rel="noopener" class="link-externo">Abrir ↗</a>
+{%- else -%}
+    —
+{%- endif -%}
+{% endmacro %}
+
+
+{% macro opcao_filtro(nome, valor, rotulo, atual, classe="") %}
+<label class="opcao-filtro {{ classe }}">
+    <input type="radio" name="{{ nome }}" value="{{ valor }}"
+           {% if atual == valor %}checked{% endif %}
+           onchange="this.form.submit()">
+    {% if classe %}<span class="ponto-status"></span>{% endif %}
+    {{ rotulo }}
+</label>
+{% endmacro %}

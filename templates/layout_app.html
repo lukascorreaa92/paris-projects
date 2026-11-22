@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+
+{# Moldura das telas internas: menu lateral + área principal.
+   As páginas que herdam daqui preenchem só o bloco "principal". #}
+
+{# Na tela de detalhe não existe "filtros"; usamos um dicionário vazio #}
+{% set f = filtros | default({}) %}
+
+{% block conteudo %}
+<div class="layout-app">
+
+    <!-- Menu lateral: um único formulário para busca + filtros -->
+    <aside class="lateral">
+        <form method="get" action="{{ url_for('projetos') }}" class="form-filtros">
+
+            <section class="painel">
+                <h2>Projetos</h2>
+                <div class="busca">
+                    <input type="search" name="busca" value="{{ f.busca or '' }}"
+                           placeholder="Cliente ou GP..." class="campo-busca">
+                    <button type="submit" class="botao-busca" title="Buscar">Buscar</button>
+                </div>
+                <ul class="lista-projetos">
+                    {% for p in projetos %}
+                        <li class="status-{{ p.classe_status }}
+                                   {% if projeto is defined and projeto.id == p.id %}ativo{% endif %}">
+                            <a href="{{ url_for('detalhe_projeto', projeto_id=p.id) }}">
+                                <span class="ponto-status" title="{{ p.status }}"></span>
+                                <span class="tag-produto">{{ p.produto }}</span>
+                                {{ p.cliente }}
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="vazio">Nenhum projeto encontrado</li>
+                    {% endfor %}
+                </ul>
+            </section>
+
+            <section class="painel">
+                <h2>Filtros</h2>
+
+                <fieldset class="grupo-filtro">
+                    <legend>Situação</legend>
+                    {{ m.opcao_filtro("status", "", "Todas", f.status or "") }}
+                    {% for s in status_filtro %}
+                        {{ m.opcao_filtro("status", s, s | capitalize, f.status, classe="status-" ~ classe_status[s]) }}
+                    {% endfor %}
+                </fieldset>
+
+                <fieldset class="grupo-filtro">
+                    <legend>Produto</legend>
+                    {{ m.opcao_filtro("produto", "", "Todos", f.produto or "") }}
+                    {% for prod in opcoes.PRODUTOS %}
+                        {{ m.opcao_filtro("produto", prod, prod, f.produto) }}
+                    {% endfor %}
+                </fieldset>
+
+                <fieldset class="grupo-filtro">
+                    <legend>Ordenar por</legend>
+                    {% for valor, rotulo in opcoes_ordem.items() %}
+                        {{ m.opcao_filtro("ordem", valor, rotulo, f.ordem or "urgencia") }}
+                    {% endfor %}
+                </fieldset>
+
+                <a href="{{ url_for('projetos') }}" class="link-limpar">Limpar filtros</a>
+            </section>
+
+        </form>
+    </aside>
+
+    <!-- Área principal -->
+    <main class="area-principal">
+        {% block principal %}{% endblock %}
+    </main>
+
+</div>
+{% endblock %}

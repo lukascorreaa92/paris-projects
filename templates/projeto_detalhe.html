@@ -1,0 +1,74 @@
+{% extends "layout_app.html" %}
+{% import "macros.html" as m %}
+
+{% block titulo %}{{ projeto.cliente }} · {{ nome_app }}{% endblock %}
+
+{% block principal %}
+<div class="detalhe status-{{ projeto.classe_status }}">
+
+    <div class="detalhe-barra">
+        <a href="{{ url_for('projetos') }}" class="link-voltar">← Todos os projetos</a>
+        <a href="{{ url_for('editar_projeto', projeto_id=projeto.id) }}" class="botao botao-primario">Editar</a>
+    </div>
+
+    <header class="detalhe-cabecalho">
+        <div class="detalhe-etiquetas">
+            <span class="tag-produto">{{ projeto.produto }}</span>
+            <span class="selo-status">{{ projeto.status }}</span>
+        </div>
+        <h1 class="detalhe-titulo">{{ projeto.cliente }}</h1>
+    </header>
+
+    <!-- Campos principais, em duas colunas (como no rascunho) -->
+    <div class="detalhe-colunas">
+        <dl class="lista-dados">
+            <div><dt>Infra</dt><dd>{{ m.link_externo(projeto.infra_url) }}</dd></div>
+            <div><dt>Doc</dt><dd>{{ m.link_externo(projeto.doc_url) }}</dd></div>
+            <div><dt>Início do projeto</dt><dd>{{ projeto.data_inicio_projeto | data_br }}</dd></div>
+            <div><dt>Planilhas: envio</dt><dd>{{ projeto.planilhas_data_envio | data_br }}</dd></div>
+            <div><dt>Planilhas: devolução</dt><dd>{{ projeto.planilhas_data_devolucao | data_br }}</dd></div>
+            <div><dt>Início do cadastro</dt><dd>{{ projeto.data_inicio_cadastro | data_br }}</dd></div>
+        </dl>
+
+        <dl class="lista-dados">
+            <div><dt>Início dos treinamentos</dt><dd>{{ projeto.data_inicio_treinamentos | data_br }}</dd></div>
+            <div><dt>Validação c/ cliente</dt><dd>{{ projeto.validacao_cliente }}</dd></div>
+            <div><dt>Passagem p/ homologação</dt><dd>{{ projeto.passagem_homologacao }}</dd></div>
+            <div><dt>Reunião c/ implantador</dt><dd>{{ projeto.reuniao_implantador }}</dd></div>
+            <div><dt>Status do projeto</dt><dd>{{ projeto.status }}</dd></div>
+        </dl>
+    </div>
+
+    <!-- Prazos calculados pelo sistema -->
+    <section class="detalhe-prazos">
+        <h2>Prazos</h2>
+        {% for etapa in projeto.prazos %}
+            <div class="linha-prazo">
+                <span class="prazo-nome">{{ etapa.nome }}</span>
+                <span class="prazo-data">
+                    {% if etapa.prazo %}até {{ etapa.prazo | data_br }}{% endif %}
+                </span>
+                <span class="selo-prazo prazo-{{ etapa.classe }}">{{ etapa.texto }}</span>
+            </div>
+        {% endfor %}
+    </section>
+
+    <!-- Campos secundários, no retângulo menor -->
+    <section class="detalhe-secundario">
+        <h2>Informações secundárias</h2>
+        <dl class="grade-secundaria">
+            <div><dt>Tipo de projeto</dt><dd>{{ projeto.tipo_projeto or "—" }}</dd></div>
+            <div><dt>Tipo de servidor</dt><dd>{{ projeto.tipo_servidor or "—" }}</dd></div>
+            <div><dt>GP</dt><dd>{{ projeto.gp or "—" }}</dd></div>
+            <div><dt>Telelaudo</dt><dd>{{ projeto.telelaudo or "Não há" }}</dd></div>
+            <div><dt>Integração</dt><dd>{{ projeto.integracao or "Não há" }}</dd></div>
+        </dl>
+    </section>
+
+    <footer class="detalhe-rodape">
+        Cadastrado em {{ projeto.criado_em | data_hora_br }}
+        · Última atualização em {{ projeto.atualizado_em | data_hora_br }}
+    </footer>
+
+</div>
+{% endblock %}

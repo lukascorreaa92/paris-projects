@@ -1,0 +1,33 @@
+# ============================================================
+# Arquivos que NUNCA devem ir para o GitHub
+# ============================================================
+
+# Banco de dados e chave secreta (dados reais de clientes e segredos)
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+.chave_secreta
+
+# Ambiente virtual (cada um cria o seu com: pip install -r requirements.txt)
+venv/
+.venv/
+env/
+
+# Arquivos gerados pelo Python
+__pycache__/
+*.py[cod]
+
+# Arquivos gerados pelo PyInstaller (o .exe se distribui à parte)
+build/
+dist/
+*.spec
+
+# Variáveis de ambiente
+.env
+
+# Editores e sistema operacional
+.vscode/
+.idea/
+desktop.ini
+.DS_Store

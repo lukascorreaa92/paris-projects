@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}{{ nome_app }}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/tema.js') }}"></script>
+</head>
+<body>
+    {# Mensagens de aviso (sucesso / erro) enviadas pelo flash() no app.py #}
+    {% with mensagens = get_flashed_messages(with_categories=true) %}
+        {% if mensagens %}
+            <div class="mensagens">
+                {% for categoria, texto in mensagens %}
+                    <div class="mensagem mensagem-{{ categoria }}">{{ texto }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    {% block conteudo %}{% endblock %}
+
+    {# Botão de tema: fica fixo no canto inferior esquerdo, em todas as telas #}
+    <button type="button" class="botao-tema" onclick="alternarTema()"
+            title="Alternar tema claro/escuro" aria-label="Alternar tema claro/escuro">
+        <span class="icone-lua">🌙</span>
+        <span class="icone-sol">☀️</span>
+    </button>
+</body>
+</html>
